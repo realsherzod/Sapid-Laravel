@@ -12,7 +12,7 @@ class SendController extends Controller
      */
     public function index()
     {
-        $sends = Send::all();
+        $sends = Send::where('status', 0)->get();
         return view('Send.index', compact('sends'));
     }
 
@@ -73,10 +73,10 @@ class SendController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy($id)
+    public function destroy(Send $send)
     {
-        $sends = Send::find($id);
-        $sends->delete();
-        return redirect()->route('sends.index')->with('success', "The order has been handed over to the owner!");
+        $send->update(['status' => 1]);
+    
+        return redirect()->route('sends.index')->with('success', trans('words.success'));
     }
 }

@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('address');
             $table->string('phone');
             $table->json('sends');
+            $table->integer('status')->default(0);
             $table->timestamps();
         });
     }

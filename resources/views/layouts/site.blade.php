@@ -22,7 +22,7 @@
             <div class="navbar-bg"></div>
             <nav class="navbar navbar-expand-lg main-navbar sticky">
                 <div class="form-inline mr-auto">
-                    <ul class="navbar-nav mr-3">
+                    {{-- <ul class="navbar-nav mr-3">
                         <li><a href="#" data-toggle="sidebar" class="nav-link nav-link-lg
 									collapse-btn">
                                 <i data-feather="align-justify"></i></a></li>
@@ -30,39 +30,34 @@
                                 <i data-feather="maximize"></i>
                             </a></li>
                        
-                    </ul>
+                    </ul> --}}
                 </div>
                 <ul class="navbar-nav navbar-right">
-
+  
                     <li class="dropdown dropdown-list-toggle"><a href="#" data-toggle="dropdown"
-                            class="nav-link notification-toggle nav-link-lg"><i data-feather="bell" class="bell"></i>
+                            class="nav-link notification-toggle nav-link-lg"><i data-feather="globe" style="color: grey" class="bell"></i>
                         </a>
-                        <div class="dropdown-menu dropdown-list dropdown-menu-right pullDown">
-                            <div class="dropdown-header">
-                                Notifications
-                                <div class="float-right">
-                                    <a href="#">Mark All As Read</a>
-                                </div>
-                            </div>
-                            <div class="dropdown-list-content dropdown-list-icons">
-                                <a href="#" class="dropdown-item dropdown-item-unread"> <span
-                                        class="dropdown-item-icon bg-primary text-white"> <i
-                                            class="fas
-												fa-code"></i>
-                                    </span> <span class="dropdown-item-desc"> Template update is
-                                        available now! <span class="time">2 Min
-                                            Ago</span>
+                        <div class="dropdown-menu dropdown-list dropdown-menu-right pullDown" style="width: 200px;">
+                            <div style="margin: 10px;">
+                                <a href="#" class="dropdown-item dropdown-item-unread">
+                                    <span class="dropdown-item-icon bg-primary text-white">
+                                        <i data-feather="globe" style="color: grey; font-size: 14px;" class="bell"></i>
+                                    </span>
+                                    <span class="dropdown-item-desc">
+                                        {{ \App::getLocale() }} <br>
+                                        <span class="time">Selected Language</span>
                                     </span>
                                 </a>
                             </div>
-                            <div class="dropdown-footer text-center">
-                                <a href="#">View All <i class="fas fa-chevron-right"></i></a>
-                            </div>
+                            <a href="{{ route('language', 'uz') }}" class="dropdown-item" style="color: black;">UZ</a>
+                            <a href="{{ route('language', 'ru') }}" class="dropdown-item" style="color: black;">RU</a>
+                            <a href="{{ route('language', 'en') }}" class="dropdown-item" style="color: black;">EN</a>
                         </div>
+                        
                     </li>
                     <li class="dropdown"><a href="#" data-toggle="dropdown"
                             class="nav-link dropdown-toggle nav-link-lg nav-link-user"> <img alt="image"
-                                src="assets/img/ava.png" > <span
+                                src="{{asset('assets/img/ava.png')}}" > <span
                                 class="d-sm-none d-lg-inline-block"></span></a>
                         <div class="dropdown-menu dropdown-menu-right pullDown">
                             <div class="dropdown-title">Hello {{ Auth::user()->name }}</div>
@@ -84,8 +79,8 @@
 
 
                 <div class="settingSidebar">
-                    <a href="javascript:void(0)" class="settingPanelToggle"> <i class="fa fa-spin fa-cog"></i>
-                    </a>
+                    {{-- <a href="javascript:void(0)" class="settingPanelToggle"> <i class="fa fa-spin fa-cog"></i>
+                    </a> --}}
                     <div class="settingSidebar-body ps-container ps-theme-default">
                         <div class=" fade show active">
                             <div class="setting-panel-header">Setting Panel
@@ -198,6 +193,30 @@
     <script src="{{ asset('assets/js/scripts.js') }}"></script>
     <!-- Custom JS File -->
     <script src="{{ asset('assets/js/custom.js') }}"></script>
+    
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+    <!-- Include jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<!-- Include Morris.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.4/raphael-min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
+
+
+    <script>
+        function translateText(inputId, outputId, fromLang, toLang) {
+            var inputValue = $('#' + inputId).val();
+            var url = "https://translate.googleapis.com/translate_a/single?client=gtx&sl=" + fromLang + "&tl=" + toLang + "&dt=t&q=" + encodeURI(inputValue);
+    
+            $.getJSON(url, function(data) {
+                var translatedText = data[0][0][0];
+                $('#' + outputId).val(translatedText);
+            });
+        }
+    </script>
+    
+    @yield('js')
+
 </body>
 
 </html>

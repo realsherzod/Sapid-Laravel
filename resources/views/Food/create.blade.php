@@ -38,9 +38,9 @@
 </style>
     <div class="row">
         <div class="col-12 text-center">
-            <h1>Create New Food</h1>
+            <h1>@lang('words.create_food')</h1>
             <div class="col-12 text-right mb-3">
-                <a class="btn btn-warning btn-sm" href="{{ route('foods.index') }}">Back</a>
+                <a class="btn btn-warning btn-sm" href="{{ route('foods.index') }}">@lang('words.back')</a>
             </div>
             <div class="col_12">
                 <div class="card">
@@ -49,10 +49,10 @@
                         @csrf
                         <div class="card-body">
                             <div class="form-group">
-                                <label class="form-label" for="category_id">Select Category</label>
+                                <label class="form-label" for="category_id">@lang('words.select_category')</label>
                                 <select class="form-select" name="category_id" id="category_id">
                                     @foreach ($categories as $category)
-                                        <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                        <option value="{{ $category->id }}">{{ $category['name_' . \App::getLocale()] }}</option>
                                     @endforeach
                                 </select>
                                 @error('category_id')
@@ -60,34 +60,58 @@
                                 @enderror
                             </div>
                             <div class="form-group">
-                                <label for="title">Food Name</label>
-                                <input id="title" type="text"
-                                    class="form-control @error('title') is-invalid @enderror" name="title" required=""
-                                    placeholder="Enter food's title" value="{{ old('title') }}">
+                                <label for="title_uz">@lang('words.food_name')</label>
+                                <input id="title_uz" type="text"
+                                    class="form-control @error('title_uz') is-invalid @enderror" name="title_uz" required=""
+                                    placeholder="@lang('words.food_placeholer1')" value="{{ old('title_uz') }}">
 
                                 <div class="invalid-feedback">
-                                    @error('title')
+                                    @error('title_uz')
                                         {{ $message }}
                                     @enderror
                                 </div>
                             </div>
+                            <div class="from-group">
+                                <label for="title_ru">Ru:</label>
+                                <input id="title_ru" type="text"
+                                    class="form-control @error('title_ru') is-invalid @enderror" name="title_ru" required=""
+                                    placeholder="@lang('words.food_placeholer1') (RU)" value="{{ old('title_ru') }}">
+                            </div>
+                            <div class="from-group">
+                                <label for="title_en">En:</label>
+                                <input id="title_en" type="text"
+                                    class="form-control @error('title_en') is-invalid @enderror" name="title_en" required=""
+                                    placeholder="@lang('words.food_placeholer1') (EN)" value="{{ old('title_en') }}">
+                            </div>
                             <div class="form-group">
-                                <label for="description">Food Description</label>
-                                <input id="description" type="text"
-                                    class="form-control @error('description') is-invalid @enderror" name="description" required=""
-                                    placeholder="Enter food's description" value="{{ old('description') }}">
+                                <label for="description_uz">@lang('words.food_description')</label>
+                                <input id="description_uz" type="text"
+                                    class="form-control @error('description_uz') is-invalid @enderror" name="description_uz" required=""
+                                    placeholder="@lang('words.food_placeholer3')" value="{{ old('description_uz') }}">
 
                                 <div class="invalid-feedback">
-                                    @error('description')
+                                    @error('description_uz')
                                         {{ $message }}
                                     @enderror
                                 </div>
                             </div>
+                            <div class="from-group">
+                                <label for="description_ru">Ru:</label>
+                                <input id="description_ru" type="text"
+                                    class="form-control @error('description_ru') is-invalid @enderror" name="description_ru" required=""
+                                    placeholder="@lang('words.food_placeholer3') (RU)" value="{{ old('description_ru') }}">
+                            </div>
+                            <div class="from-group">
+                                <label for="description_en">En:</label>
+                                <input id="description_en" type="text"
+                                    class="form-control @error('description_en') is-invalid @enderror" name="description_en" required=""
+                                    placeholder="@lang('words.food_placeholer3') (EN)" value="{{ old('description_en') }}">
+                            </div>
                             <div class="form-group">
-                                <label for="price">Food Price</label>
+                                <label for="price">@lang('words.food_price')</label>
                                 <input id="price" type="number"
                                     class="form-control @error('price') is-invalid @enderror" name="price" required=""
-                                    placeholder="Enter food's price" value="{{ old('price') }}">
+                                    placeholder="@lang('words.food_placeholer2')" value="{{ old('price') }}">
 
                                 <div class="invalid-feedback">
                                     @error('price')
@@ -96,21 +120,36 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="image">Image</label>
+                                <label for="image">@lang('words.food_image')</label>
                                 <input id="image" type="file" class="form-control" name="image" required="">
                                 <div class="invalid-feedback">
-                                    @error('description')
+                                    @error('image')
                                         {{ $message }}
                                     @enderror
                                 </div>
                               </div>
                         </div>
                         <div class="card-footer text-right">
-                            <button class="btn btn-primary">Submit</button>
+                            <button class="btn btn-primary">@lang('words.submit')</button>
                         </div>
                     </form>
                 </div>
             </div>
         </div>
     </div>
+@endsection
+
+@section('js')
+<script>
+    
+    $('#title_uz').on('input', function() {
+            translateText('title_uz', 'title_en', 'uz', 'en');
+            translateText('title_uz', 'title_ru', 'uz', 'ru');
+        });
+    $('#description_uz').on('input', function() {
+            translateText('description_uz', 'description_en', 'uz', 'en');
+            translateText('description_uz', 'description_ru', 'uz', 'ru');
+        });
+</script>
+
 @endsection

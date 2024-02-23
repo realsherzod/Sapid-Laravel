@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\Auth\PasswordResetLinkController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\CompletedController;
 use App\Http\Controllers\FoodController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SendController;
@@ -20,6 +22,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('auth.login');
 });
+Route:: resource('forgotpassword', PasswordResetLinkController::class );
 
 Route::get('/dashboard', function () {
     return view('welcome');
@@ -36,6 +39,17 @@ Route::middleware('auth')->group(function () {
     Route::resource('categories', CategoryController::class);
     Route::resource('foods', FoodController::class);
     Route::resource('sends', SendController::class);
+    Route:: resource('completeds', CompletedController::class );
+    
 });
+
+Route::get('lang/{lang}', function ($lang) {
+    session(['lang' => $lang]);
+    return back();
+})->name('language');
+
+Route::get(uri: '/chat', action:'App\Http\Controllers\PusherController@index');
+Route::post(uri: '/broadcast', action:'App\Http\Controllers\PusherController@broadcast');
+Route::post(uri: '/receive', action:'App\Http\Controllers\PusherController@receive');
 
 require __DIR__ . '/auth.php';

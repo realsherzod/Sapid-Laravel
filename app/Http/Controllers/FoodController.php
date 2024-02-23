@@ -34,10 +34,14 @@ class FoodController extends Controller
     {
         $this->validate($request, [
             'category_id' => 'required',
-            'title' => 'required',
-            'image' => 'required|image|mimes:png,jpg',
-            'description' => 'required',
+            'title_uz' => 'required',
+            'title_ru' => 'required',
+            'title_en' => 'required',
+            'description_uz' => 'required',
+            'description_ru' => 'required',
+            'description_en' => 'required',
             'price' => 'required',
+            'image' => 'required|image|mimes:png,jpg',
                 ]);
         
                 if($request->hasFile('image')){
@@ -48,7 +52,7 @@ class FoodController extends Controller
                 $requestData['image'] = $path;
                 Food::create($requestData);
         
-                return redirect()->route('foods.index')->with('success', "Food added successfully");
+                return redirect()->route('foods.index')->with('success', trans('words.added'));
         
             
             }
@@ -80,8 +84,12 @@ class FoodController extends Controller
     {
         $this->validate($request, [
             'category_id' => 'required',
-            'title' => 'required',
-            'description' => 'required',
+            'title_uz' => 'required',
+            'title_ru' => 'required',
+            'title_en' => 'required',
+            'description_uz' => 'required',
+            'description_ru' => 'required',
+            'description_en' => 'required',
             'price' => 'required',
             'image' => 'image|mimes:png,jpg', // Validate image conditionally
         ]);
@@ -103,7 +111,7 @@ class FoodController extends Controller
     
         $food->update($requestData);
     
-        return redirect()->route('foods.index')->with('warning', 'Food edited successfully');
+        return redirect()->route('foods.index')->with('warning', trans('words.edited'));
     }
 
     /**
@@ -113,6 +121,6 @@ class FoodController extends Controller
     {
         $foods = Food::find($id);
         $foods->delete();
-        return redirect()->route('foods.index')->with('danger', "Food deleted!");
+        return redirect()->route('foods.index')->with('danger', trans('words.delete1'));
     }
 }
